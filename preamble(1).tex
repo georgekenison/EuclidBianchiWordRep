@@ -1,0 +1,188 @@
+%\usepackage{amssymb,amsmath,amsthm,mathrsfs}
+%\usepackage{amsthm}
+\usepackage{amssymb,amsmath,mathrsfs}
+\usepackage{microtype}
+\usepackage[small,basic]{complexity}
+\usepackage{xspace}
+\usepackage{mathtools}
+\usepackage{thmtools}
+
+\usepackage{thm-restate}
+\usepackage{setspace}
+
+
+\usepackage[dvipsnames,table]{xcolor}
+\definecolor{ruby}{RGB}{116,0,1}
+\definecolor{emerald}{RGB}{26,121,42}
+\definecolor{topaz}{RGB}{236,185,57}
+\definecolor{sapphire}{RGB}{14,26,164}
+\usepackage{tikz}
+
+
+\newcommand{\red}[1]{\textcolor{ruby}{#1}}
+\newcommand{\blue}[1]{\textcolor{sapphire}{#1}}
+
+
+\usepackage[color=BurntOrange!50!white, bordercolor=BurntOrange]{todonotes}
+\presetkeys{todonotes}{inline, caption={}}{}
+\newcommand{\gk}[1]{\todo[color=PineGreen!40!white, bordercolor=PineGreen,inline]{gk: #1}}
+
+\usepackage{bm}
+%\usepackage{cite}
+\usepackage{enumerate}
+
+
+\usepackage{hyperref}
+\hypersetup{
+	final,
+	colorlinks,
+	 linkcolor={sapphire},
+	 citecolor={emerald},
+	 urlcolor={ruby}
+}
+
+
+
+\usepackage[capitalise,nameinlink]{cleveref}
+\newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
+
+
+\usepackage[margin=1in]{geometry}
+
+
+\usepackage{listings} 
+\lstdefinelanguage{Sage}[]{Python}
+{morekeywords={True,False,sage,singular},
+sensitive=true}
+\lstset{frame=single,
+          breaklines=true,
+          postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+          showtabs=False,
+          showspaces=False,
+          showstringspaces=False,
+          commentstyle={\ttfamily\color{dredcolor}},
+          keywordstyle={\ttfamily\color{dbluecolor}\bfseries},
+          stringstyle ={\ttfamily\color{dgraycolor}\bfseries},
+          language = Sage,
+	  basicstyle={\small \ttfamily},
+	  aboveskip=10pt,
+	  belowskip=10pt,
+          }
+\definecolor{dblackcolor}{rgb}{0.0,0.0,0.0}
+\definecolor{dbluecolor}{rgb}{.01,.02,0.7}
+\definecolor{dredcolor}{rgb}{0.8,0,0}
+\definecolor{dgraycolor}{rgb}{0.30,0.3,0.30}
+\newcommand{\dblue}{\color{dbluecolor}\bf}
+\newcommand{\dred}{\color{dredcolor}\bf}
+\newcommand{\dblack}{\color{dblackcolor}\bf}
+
+%\renewcommand{\emph}[1]{{\dblack{#1}}}
+\newcommand{\Sage}{{\color{dbluecolor}\sf Sage}\xspace}
+
+
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+
+
+% Theorem-like environments.
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{proposition}[theorem]{Proposition}
+
+%\newtheorem{thm}{Theorem}
+%\newtheorem{lem}[thm]{Lemma}
+\spnewtheorem{numclaim}[theorem]{Claim}{\bfseries}{\itshape}
+\crefname{numclaim}{Claim}{Claims}
+%\spnewtheorem{maintheorem}[theorem]{Main Theorem}{\bfseries}{\itshape}
+
+%\theoremstyle{definition}
+
+ %\newtheorem{example}[thm]{Example}
+ %\newtheorem{problem}[thm]{Problem}
+ %\newtheorem{definition}[thm]{Definition}
+
+ %\theoremstyle{remark}
+ %\newtheorem{remark}[thm]{Remark}
+
+%%%%%%
+
+\newcommand{\seq}[3][{}]{\langle #2 \rangle_{#3}^{#1}}
+
+% Complexity classes
+\newclass{\EXPTIME}{EXPTIME}
+\newclass{\PTIME}{PTIME}
+
+% Shorthand commands
+\renewcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Oc}{\mathcal{O}}
+\renewcommand{\H}{\mathbb{H}}
+\renewcommand{\K}{\mathbb{K}}
+
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\PSL}{PSL}
+\let\SL\relax \DeclareMathOperator{\SL}{SL}
+\DeclareMathOperator{\SU}{SU}
+\DeclareMathOperator{\SZ}{SZ}
+\DeclareMathOperator{\SA}{SA}
+\DeclareMathOperator{\SM}{SM}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\T}{T}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\Lat}{Lat}
+\DeclareMathOperator{\uni}{UT}
+\DeclareMathOperator{\ut}{U}
+\DeclareMathOperator{\fg}{F}
+\DeclareMathOperator{\sg}{S}
+
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
+\newcommand{\veca}{\bm{a}}
+\newcommand{\vecb}{\bm{b}}
+\newcommand{\vecz}{\bm{0}}
+\newcommand{\vect}{\textrm{vec}}
+
+%\usepackage{algpseudocode}
+\usepackage[plain]{algorithm}
+\usepackage{algorithmicx,algpseudocode}
+
+
+ \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+ \renewcommand{\algorithmicensure}{\textbf{Assert:}}
+ \renewcommand{\algorithmiccomment}[1]{\hfill\textcolor{gray}{$\triangleright$ #1}}
+
+
+\DeclareMathOperator{\tr}{tr}
+
+\newcommand*\wc{{ }\cdot{ }}
+
+%newcommand\topcornereq{\stackrel{[1,3]}{=}}
+
+\renewcommand{\S}{\mathcal{S}}
+
+\newcolumntype{L}[1]{>{\centering\arraybackslash}m{#1}}
+
+%\newcommand\todo[1]{{\color{red} TODO: #1}}
+%\newcommand\note[1]{{\color{orange} Note: #1}}
+
+% The number `e'
+\providecommand*{\eu}%
+{\ensuremath{\mathrm{e}}}
+% The imaginary unit
+\providecommand*{\iu}%
+{\ensuremath{\mathrm{i}}}
+
+
+% short minus sign
+
+\DeclareMathSymbol{\shortminus}{\mathbin}{AMSa}{"39}
+\newcommand{\medminus}{\scalebox{0.6}[0.7]{\(-\)}}
+\newcommand{\minus}{\mathchoice{-}{-}{\medminus}{\shortminus}}
