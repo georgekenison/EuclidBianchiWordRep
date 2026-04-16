@@ -1,7 +1,4 @@
-%\usepackage{amssymb,amsmath,amsthm,mathrsfs}
-%\usepackage{amsthm}
 \usepackage{amssymb,amsmath,mathrsfs}
-\usepackage{microtype}
 \usepackage[small,basic]{complexity}
 \usepackage{xspace}
 \usepackage{mathtools}
@@ -9,6 +6,7 @@
 
 \usepackage{thm-restate}
 \usepackage{setspace}
+
 
 
 \usepackage[dvipsnames,table]{xcolor}
@@ -23,12 +21,8 @@
 \newcommand{\blue}[1]{\textcolor{sapphire}{#1}}
 
 
-\usepackage[color=BurntOrange!50!white, bordercolor=BurntOrange]{todonotes}
-\presetkeys{todonotes}{inline, caption={}}{}
-\newcommand{\gk}[1]{\todo[color=PineGreen!40!white, bordercolor=PineGreen,inline]{gk: #1}}
-
 \usepackage{bm}
-%\usepackage{cite}
+%
 \usepackage{enumerate}
 
 
@@ -47,7 +41,7 @@
 \newcommand{\appref}[1]{\hyperref[#1]{Appendix~\ref*{#1}}}
 
 
-\usepackage[margin=1in]{geometry}
+%
 
 
 \usepackage{listings} 
@@ -76,7 +70,7 @@ sensitive=true}
 \newcommand{\dred}{\color{dredcolor}\bf}
 \newcommand{\dblack}{\color{dblackcolor}\bf}
 
-%\renewcommand{\emph}[1]{{\dblack{#1}}}
+
 \newcommand{\Sage}{{\color{dbluecolor}\sf Sage}\xspace}
 
 
@@ -86,25 +80,13 @@ sensitive=true}
 
 
 % Theorem-like environments.
-%\newtheorem{theorem}{Theorem}
-%\newtheorem{lemma}[theorem]{Lemma}
-%\newtheorem{corollary}[theorem]{Corollary}
-%\newtheorem{proposition}[theorem]{Proposition}
+\spnewtheorem{nclam}{Claim}{\bfseries}{\itshape}
+\crefname{nclam}{Claim}{Claims}
+% claims in separate counter
 
-%\newtheorem{thm}{Theorem}
-%\newtheorem{lem}[thm]{Lemma}
-\spnewtheorem{numclaim}[theorem]{Claim}{\bfseries}{\itshape}
-\crefname{numclaim}{Claim}{Claims}
-%\spnewtheorem{maintheorem}[theorem]{Main Theorem}{\bfseries}{\itshape}
-
-%\theoremstyle{definition}
-
- %\newtheorem{example}[thm]{Example}
- %\newtheorem{problem}[thm]{Problem}
- %\newtheorem{definition}[thm]{Definition}
-
- %\theoremstyle{remark}
- %\newtheorem{remark}[thm]{Remark}
+\let\remark\relax % undefine the environment
+\let\theremark\relax
+\spnewtheorem{remark}{Remark}{\bfseries}{\rmfamily} % puts remarks into separate counter
 
 %%%%%%
 
@@ -148,7 +130,7 @@ sensitive=true}
 \newcommand{\veca}{\bm{a}}
 \newcommand{\vecb}{\bm{b}}
 \newcommand{\vecz}{\bm{0}}
-\newcommand{\vect}{\textrm{vec}}
+%\newcommand{\vect}{\textrm{vec}}
 
 %\usepackage{algpseudocode}
 \usepackage[plain]{algorithm}
@@ -164,14 +146,10 @@ sensitive=true}
 
 \newcommand*\wc{{ }\cdot{ }}
 
-%newcommand\topcornereq{\stackrel{[1,3]}{=}}
-
 \renewcommand{\S}{\mathcal{S}}
 
 \newcolumntype{L}[1]{>{\centering\arraybackslash}m{#1}}
 
-%\newcommand\todo[1]{{\color{red} TODO: #1}}
-%\newcommand\note[1]{{\color{orange} Note: #1}}
 
 % The number `e'
 \providecommand*{\eu}%

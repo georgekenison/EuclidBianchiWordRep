@@ -1,45 +1,57 @@
 \documentclass[runningheads]{llncs}
 
-\input{preamble}
+\input{dlt-preamble}
+
+\usepackage[left=25mm, right=25mm]{geometry}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc} \DeclareUnicodeCharacter{2212}{-}
 
 
 \begin{document}
+\title{SageMath Code for: On Word Representations and Embeddings in Complex Matrices
+}
+\titlerunning{On Word Representations and Embeddings in Complex Matrices}
+
+\author{George Kenison}
+\institute{}
+
+\maketitle
 
 \section{Pseudocode}
 
-In our submission, we prove two claims by employing an exhaustive search of matrices in \(\PSL(2,\Oc_d)\) with a specified norm property. The pseudocode below details the procedure.
+In the appendix of our paper, we prove a claim by employing an exhaustive search of matrices in \(\PSL(2,\Oc_d)\) with a specified norm property. The pseudocode below details the procedure.
+
 \begin{algorithm}
 \setstretch{1.35}
 \begin{algorithmic}
 \Require {\(d\in\{1,2,3,7,11\}\)}
 \State \texttt{matrices} \(\leftarrow\) empty list 
-\State \(S\leftarrow \bigl\{x\in \Oc_d : N(x) < \tfrac{1}{1-\kappa(d)}\bigr\}\); \Comment{set of matrix entries}
+\State \(S\leftarrow \bigl\{x\in \Oc_d : N(x) < \tfrac{1}{1-\kappa(d)}\bigr\}\); \Comment{set of matrix entries (see full paper)}
 \For{ordered tuples \((\alpha,\beta,\gamma, \delta)\), with \(\alpha,\beta,\gamma,\delta\in S\), \(\gamma\neq 0\), and \(\alpha \delta - \beta \gamma = 1\)} 
 \State \(\bigl( M, \|M\|\bigr)  \leftarrow \left( \begin{psmallmatrix} \alpha & \beta \\ \gamma & \delta \end{psmallmatrix} , \max\{|\alpha|^2, |\beta|^2, |\gamma|^2, |\delta|^2\}\right)\); \Comment{matrix and its norm}
-%\State \(\|M\| \leftarrow \max\{|\alpha|^2, |\beta|^2, |\gamma|^2, |\delta|^2\}\)
-\State \(\theta \leftarrow \textsc{Quotient}(-\delta, \gamma)\); \Comment{output quotient \(-\theta\in\Oc_d\)} %and remainder \(\gamma'\) with \(\theta, \gamma' \in \Oc_d\) such that \(N(\gamma') < N(\gamma)\).}
+\State \(\theta \leftarrow \textsc{Quotient}(-\delta, \gamma)\); \Comment{output quotient \(-\theta\in\Oc_d\)} %
 \State \((\alpha,\beta) \leftarrow (\theta \cdot \alpha + \beta, -\alpha)\); 
 \State \((\gamma, \delta) \leftarrow (\theta \cdot \gamma + \delta, -\gamma)\);
 \State \(\bigl( N, \|N\| \bigr)  \leftarrow \left(\begin{psmallmatrix} \alpha & \beta \\ \gamma & \delta \end{psmallmatrix}, \max\{|\alpha|^2, |\beta|^2, |\gamma|^2, |\delta|^2\} \right)  \); \Comment{update matrix and its norm}
-%\State \(\|N\| \leftarrow \begin{psmallmatrix} \alpha & \beta \\ \gamma & \delta \end{psmallmatrix}\)
 \If{\(\|M\| < \|N\|\)}
-\State add \((M, N)\) to \texttt{matrices} %\Comment{add pair \((M_{\ell-1}, M_{\ell})\)}
+\State add \((M, N)\) to \texttt{matrices} %
 \EndIf
 \EndFor
 \If{\texttt{matrices} is an empty list}
-\State \Return \textsc{\lq\lq Claim holds for matrices in \(\PSL(2,\Oc_d)\)\rq\rq}
+\State \Return {\lq\lq Claim holds for matrices in \(\PSL(2,\Oc_d)\)\rq\rq}
 \Else
-\State \Return \textsc{\lq\lq Claim does not hold for the pairs} \texttt{matrices}\rq\rq
+\State \Return {\lq\lq Claim does not hold for the pairs} \texttt{matrices}\rq\rq
 \EndIf
-\caption{Search and verification of claims in \(\PSL(2,\Oc_d)\).\label{alg:cap}}
+\caption{Search and verification of claim in \(\PSL(2,\Oc_d)\).\label{alg:cap}}
 \end{algorithmic}
 \end{algorithm}
 
+In \cref{alg:cap}, the function \(\textsc{Quotient}\colon \Oc_d \times \Oc_d \to \Oc_d\) takes as input an ordered pair of algebraic integers and returns their quotient (in the ring \(\Oc_d\)).
+In other words, for the ordered pair \((a,b)\in\Oc_d\times \Oc_d\), \textsc{Quotient} returns the nearest integer (in \(\Oc_d\)) to \(a/b\).
+
 \section{SageMath code for \texorpdfstring{\(\PSL(2,\Z[\iu])\)}{PSL(2,Z[i])}}
-Here we comment on the implementation for the search for matrices in \(\PSL(2,\Z[\iu])\). \textit{Mutatis Mutandis,} the procedures for searching the other Euclidean Bianchi groups are similar.
+Here we comment on the implementation for the search for matrices in \(\PSL(2,\Z[\iu])\). \textit{Mutatis mutandis,} the procedures for searching the other Euclidean Bianchi groups are similar.
 
 
 \medskip
@@ -51,12 +63,14 @@ sage: # CC.0 is the imaginary unit 'i'
       OK = K.ring_of_integers()
 \end{lstlisting}
 
-SageMath does not automatically recognise rings, such as the integer rings \(\Oc_d\), that are Euclidean domains. Thus for integers \(a,b\in\Oc_d\), the function \verb|a.quo_rem(b)[0]| will output the quotient \(a/b\) obtained by division in the field \(\QQ(\sqrt{- d})\). 
-We circumvent this problem by implementing a search for the {closest} algebraic integer in \(\Oc_d\) to the quotient \(a/b\).
-As an aside, simply rounding the coordinates of an algebraic number does not work for finding the closest algebraic integer in an oblique lattice (e.g., the closest integer in \(\Oc_7\)).
+SageMath does not automatically recognise that the integer rings \(\Oc_d\) with \(d=1,2,3,7,11\) are Euclidean domains.
+Thus for integers \(a,b\in\Oc_d\), the SageMath command \verb|a.quo_rem(b)[0]| outputs the result of the division \(a/b\in\Q(\sqrt{-d})\) rather than the nearest integer in \(\Oc_d\) (the output of \textsc{Quotient}).
+We circumvent this obstacle by implementing a straightforward procedure for finding the nearest algebraic integer in \(\Oc_d\).
+
+As an aside, simply rounding the coordinates of an algebraic number does not work for finding the nearest algebraic integer in an oblique lattice (e.g., the nearest integer in \(\Oc_7\)).
 \begin{lstlisting}
-sage: # Function that returns the closest algebraic integer in OK
-      def closest_integer(field_quo):
+sage: # Function that returns the nearest algebraic integer in OK
+      def nearest_integer(field_quo):
         K = field_quo.parent()
     
         # {1, omega} is a basis for the integer lattice
@@ -74,11 +88,11 @@ sage: # Function that returns the closest algebraic integer in OK
         # Exact coordinates of the field_target in the lattice basis
         coords = B.solve_right(field_target)
     
-        # Variables that record the current closest integer
+        # Variables that record the current nearest integer
         best_norm = infinity
         best_integer = None
 
-        # Search local neighbours for the closest integer to field_target
+        # Search local neighbours for the nearest integer to field_target
         import itertools
         options = [[floor(v)-1, floor(v), floor(v)+1] for v in coords]
         for p, q in itertools.product(*options):
@@ -87,7 +101,7 @@ sage: # Function that returns the closest algebraic integer in OK
             diff = embed(candidate) - field_target
             norm_diff = diff.dot_product(diff)
 
-            # Update current closest integer 
+            # Update current nearest integer 
             if norm_diff < best_norm:
                 best_norm = norm_diff
                 best_integer = candidate
@@ -95,7 +109,7 @@ sage: # Function that returns the closest algebraic integer in OK
       return best_integer
 \end{lstlisting}
 
-Now we generate all \(2\times 2\) matrices with entries in \(\Z[\iu]\) and determinant \(1\).  We also produce the list of updated matrices, where we employ the \verb|closest_integer()| function defined above.
+Now we generate all \(2\times 2\) matrices with entries in \(\Z[\iu]\) and determinant \(1\).  We also produce the list of updated matrices, where we employ the \verb|nearest_integer()| function defined above.
 
 Recall that a matrix \(M\) and its update \(N\) in \(\PSL(2,\Oc_d)\) are defined as follows:
 \begin{equation*}M = \begin{psmallmatrix} \alpha & \beta \\ \gamma & \delta \end{psmallmatrix} \quad \text{and} \quad
@@ -107,7 +121,7 @@ Recall that a matrix \(M\) and its update \(N\) in \(\PSL(2,\Oc_d)\) are defined
     \end{psmallmatrix}.
 \end{equation*}
 \begin{lstlisting}
-sage: # Matrix entries in ZZ[i]
+sage: # Matrix entries in ZZ[i] (for other OK, see full paper or implementation)
       S = [K(0), K(1), w, w*w, w*w*w]
       T = [K(1), w, w*w, w*w*w]
 
@@ -121,8 +135,8 @@ sage: # Matrix entries in ZZ[i]
                 for d in S:
                     M = matrix(K, [[a, b], [c, d]])
                         if M.det() == 1:
-                            # closest integer to quotient
-                            theta = closest_integer(K(K(-d).quo_rem(K(c))[0]))
+                            # nearest integer to quotient
+                            theta = nearest_integer(K(K(-d).quo_rem(K(c))[0]))
                             # update entry a
                             alpha = K(theta)*K(a) + K(b)
                             # update entry c
@@ -160,7 +174,7 @@ sage: result = list(zip(mats, matsupdate, normmats, normmatsupdate))
 
 
 %\begin{minipage}[c]{0.95\textwidth}
-\begin{lstlisting}[caption={Output candidate matrices, update matrices, and their respective norms.  The claim for \(d=1\) is easily verified from the output norms.}]
+\begin{lstlisting}[caption={Output candidate matrices, update matrices, and their respective norms. \label{list:here}}]
   1. matrix [[0, 1], [-1, 0]] update [[1, 0], [0, 1]] | norms=(1, 1)
   2. matrix [[0, 1], [-1, 1]] update [[1, 0], [0, 1]] | norms=(1, 1)
   3. matrix [[0, 1], [-1, w]] update [[1, 0], [0, 1]] | norms=(1, 1)
@@ -216,5 +230,21 @@ sage: result = list(zip(mats, matsupdate, normmats, normmatsupdate))
 
 \end{lstlisting}
 %\end{minipage}
+
+We automate verifying the claim in the following code.  The claim is checked for all candidate matrix pairs arising from \texttt{mats} and \texttt{matsupdate}.  For \(\PSL(2,\Z[\iu])\) the matrix pairs are given in Listing~\ref{list:here}.
+\begin{lstlisting}
+sage: # test the claim
+      claimmats = []
+      for i, (M, N, x, y) in enumerate(result, 1):
+        if x < y:
+            print(f"#{i:3d} matrix {list(map(list, M.rows()))} update {list(map(list, N.rows()))} | norms=({x}, {y})")
+            claimmats.append(M)  
+        
+      if not claimmats:
+        print("claim holds")
+    
+      if claimmats:
+        print ("claim does not hold")
+\end{lstlisting}
 
 \end{document}
