@@ -9,10 +9,7 @@ The repository contains python notebooks (run using a SageMath kernel) for each 
 - PSL-d11.ipynb
 
 The repository also contains a brief explanation for the raw code (also repeated below). This explanation details the exhaustive search for matrices in $\textrm{PSL}(2,\mathbb{Z}[i])$.
-- sage-code.tex
-- sage-code.pdf
-- splncs04.bst
-- preamble.tex
+- dlt-sage-code.pdf
 
 ---
 
