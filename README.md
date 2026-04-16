@@ -1,5 +1,5 @@
 # Euclidean Bianchi Word Representations
-Sage code related to the Word Representation for Euclidean Bianchi Group elements.  The files relate to the exhaustive search procedure for matrices in each of the Euclidean Bianchi Groups.
+This repository contains Sage code for the paper **On Word Representations and Embeddings in Complex Matrices** (published at DLT 2026 and full version on arXiv).  The files relate to the exhaustive search procedure for matrices in each of the Euclidean Bianchi Groups.
 
 The repository contains python notebooks (run using a SageMath kernel) for each of the Euclidean Bianchi groups.
 - PSL-d1.ipynb
@@ -8,12 +8,13 @@ The repository contains python notebooks (run using a SageMath kernel) for each 
 - PSL-d7.ipynb
 - PSL-d11.ipynb
 
-The repository also contains a brief explanation for the raw code.
+The repository also contains a brief explanation for the raw code (also repeated below). This explanation details the exhaustive search for matrices in $\textrm{PSL}(2,\mathbb{Z}[i])$.
 - sage-code.tex
 - sage-code.pdf
 - splncs04.bst
 - preamble.tex
 
+---
 
 We define the Gaussian field $\mathbb{Q}[i]$ and fix the embedding that maps the generator $\omega$, a solution of $\omega^2+1=0$, to $\omega \mapsto i$.  We also specify the Gaussian integers $\mathbb{Z}[i]$.
 
